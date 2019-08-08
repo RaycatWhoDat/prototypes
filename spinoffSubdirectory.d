@@ -28,18 +28,21 @@ int main(string[] args) {
     
     auto filterBranch = execute(["git", "filter-branch", "--prune-empty", "--subdirectory-filter", folderName, branchName]);
     if (filterBranch.status != 0) {
+      writeln(filterBranch.output);
       writefln("There was a problem filtering the branch. Stopping.");
       return 2;
     }
 
     auto setRemote = execute(["git", "remote", "set-url", "origin", repoName]);
     if (setRemote.status != 0) {
+      writeln(setRemote.output);
       writefln("There was a problem setting the new remote. Stopping.");
       return 3;
     }
 
     auto pushToOrigin = execute(["git", "push", "-u", "origin", "master"]);
     if (pushToOrigin.status != 0) {
+      writeln(pushToOrigin.output);
       writefln("There was a problem pushing to origin. Stopping.");
       return 4;
     }

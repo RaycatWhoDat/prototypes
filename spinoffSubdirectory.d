@@ -26,7 +26,7 @@ int main(string[] args) {
   int spinoffSubdirectory(string folderName, string branchName, string repoName) {
     writeln("Spinning off subdirectory.");
     
-    auto filterBranch = execute(["git", "filter-branch", "--prune-empty", "--subdirectory-filter", folderName, branchName]);
+    auto filterBranch = execute(["git", "filter-branch", "-f", "--prune-empty", "--subdirectory-filter", folderName, branchName]);
     if (filterBranch.status != 0) {
       writeln(filterBranch.output);
       writefln("There was a problem filtering the branch. Stopping.");

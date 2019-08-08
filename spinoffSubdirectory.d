@@ -7,6 +7,7 @@ import std.string;
 import std.utf;
 import std.process;
 import std.format;
+import std.typecons;
 
 int main(string[] args) {
   string FOLDER_NAME, BRANCH_NAME, REPO_NAME;
@@ -25,34 +26,24 @@ int main(string[] args) {
 
   int spinoffSubdirectory(string folderName, string branchName, string repoName) {
     writeln("Spinning off subdirectory.");
-    
-    auto filterBranch = execute(["git", "filter-branch", "-f", "--prune-empty", "--subdirectory-filter", folderName, branchName]);
-    if (filterBranch.status != 0) {
-      writeln(filterBranch.output);
-      writefln("There was a problem filtering the branch. Stopping.");
-      return 2;
+
+    bool hasSucceeded(Tuple!(int, "status", string, "output") executedCommand) {
+      writeln(executedCommand.output);
+      return executedCommand.status == 0;
     }
 
+    auto filterBranch = execute(["git", "filter-branch", "-f", "--prune-empty", "--subdirectory-filter", folderName, branchName]);
+    if (!hasSucceeded(filterBranch)) return 2;
+    
     auto setRemote = execute(["git", "remote", "set-url", "origin", repoName]);
-    if (setRemote.status != 0) {
-      writeln(setRemote.output);
-      writefln("There was a problem setting the new remote. Stopping.");
-      return 3;
-    }
+    if (!hasSucceeded(setRemote)) return 3;
 
     auto pushToOrigin = execute(["git", "push", "-u", "origin", "master"]);
-    if (pushToOrigin.status != 0) {
-      writeln(pushToOrigin.output);
-      writefln("There was a problem pushing to origin. Stopping.");
-      return 4;
-    }
+    if (!hasSucceeded(pushToOrigin)) return 4;
 
     return 0;
   }
     
-  if (readln().chomp().among("y", "Y")) {
-    spinoffSubdirectory(FOLDER_NAME, BRANCH_NAME, REPO_NAME);
-  }
-
+  if (readln().chomp().among("y", "Y")) return spinoffSubdirectory(FOLDER_NAME, BRANCH_NAME, REPO_NAME);
   return 0;
 }

@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/vaulted
+vaulted.so
+vaulted.dylib
+vaulted.dll
+vaulted.a
+vaulted.lib
+vaulted-test-*
+*.exe
+*.o
+*.obj
+*.lst

@@ -1,88 +1,81 @@
 import std.stdio;
 import std.functional;
 import std.container;
+import std.variant;
+
 import vibe.d;
-
-struct FileData {
-  string fileId;
-  string fileName;
-  int creatorId;
-  string fileType;
-  string sourceId;
-  string firmId;
-}
-
-struct Relationship {
-  string relationshipId;
-  string parentId;
-  string fileId;
-  int permissions;
-  Attribute[] attributes;
-  int ownerId;
-}
-
-struct Attribute {
-  string attributeId;
-  string attributeName;
-  string attributeColor;
-}
-
-struct Source {
-  string sourceId;
-  string data;
-  bool isEmbeddable;
-}
-
-struct File {
-  string fileId;
-  string fileName;
-  string fileType;
-  string parentId;
-  string sourceId;
-  int ownerId;
-  int creatorId;
-  int permissions;
-  Attribute[] attributes;
-}
-
-// interface VaultAPI {}
+import vaulted.structs;
+import vaulted.utils;
 
 MongoClient client;
 
-class APIInterface {
-  @method(HTTPMethod.GET) @path("/")
-  void rootHandler(HTTPServerRequest request, HTTPServerResponse response) {
-    response.writeBody("Root route reached.");
-  }
-
-  @method(HTTPMethod.GET) @path("files/:parentId")
-  void getFiles(HTTPServerRequest request, HTTPServerResponse response) {
-    Bson[] allFiles;
-    auto fileCollection = client.getCollection("vault.files");
-    foreach (file; fileCollection.find()) {
-      logInfo("Found: %s", file["fileName"]);
-      allFiles ~= file;
-    }
-    
-    response.writeBody(allFiles.serializeToJsonString(), 200, "application/json");
-  }
-}
-
-void routeNotFound(HTTPServerRequest request, HTTPServerResponse response, HTTPServerErrorInfo error) {
-  response.writeBody("Route not found.");
-}
-  
 void main() {
   auto router = new URLRouter;
   router.registerWebInterface(new APIInterface);
 
   auto settings = new HTTPServerSettings;
   settings.port = 8080;
-  settings.errorPageHandler = toDelegate(&routeNotFound);
 
   client = connectMongoDB("127.0.0.1/vault", 27017);
   scope(exit) client = null;
   
   listenHTTP(settings, router);
   runApplication();
+}
+
+class APIInterface {
+  @method(HTTPMethod.GET)
+  @path("files/list/:fileId")
+  void listFiles(HTTPServerRequest request, HTTPServerResponse response) {
+    auto fileCollection = client.getCollection("vault.files");
+    BsonObjectID parentId = BsonObjectID.fromString(request.params["fileId"]);
+    VaultFile[] allFiles;
+    
+    foreach (file; fileCollection.find(["parentId": parentId])) {
+      VaultFile vaultFile = file
+                            .wrapBsonAsVaultFile()
+                            .toJson()
+                            .deserializeJson!VaultFile();
+      
+      logInfo("%s: %s", vaultFile.fileId, vaultFile.fileName);
+      allFiles ~= vaultFile;
+    }
+    
+    response.writeBody(allFiles.serializeToJsonString(), 200, "application/json");
+  }
+
+  @method(HTTPMethod.GET)
+  @path("files/fetch/:fileId")
+  void fetchFile(HTTPServerRequest request, HTTPServerResponse response) {
+    auto fileCollection = client.getCollection("vault.files");
+    BsonObjectID fileId = BsonObjectID.fromString(request.params["fileId"]);
+    VaultFile[] allFiles = [];
+    auto selectedFile = fileCollection.findOne(["_id": fileId]);
+    
+    if (!selectedFile.isNull) {
+      allFiles ~= selectedFile
+                  .wrapBsonAsVaultFile()
+                  .toJson()
+                  .deserializeJson!VaultFile();
+    }
+    
+    response.writeBody(allFiles.serializeToJsonString(), 200, "application/json");
+  }
+
+  // TODO: Make this a batch endpoint later on.
+  // @method(HTTPMethod.POST)
+  // @path("files/update/name/:fileId")
+  // void renameFile(HTTPServerRequest request, HTTPServerResponse response, string fileName) {
+  //   auto fileCollection = client.getCollection("vault.files");
+  //   string fileId = request.params["fileId"];
+  //   fileCollection.update(["_id", fileId], ["$set": ["fileName": fileName]]);
+  //   response.writeVoidBody();
+  // }
+  
+  // void updateFile(HTTPServerRequest request, HTTPServerResponse response, string key, Variant value) {
+    // BsonObjectID fileId = BsonObjectID.fromString(request.params["fileId"]);
+  //   string fileId = request.params["fileId"];
+  //   fileCollection.update(["_id", fileId], Bson(["$set": Bson([key.makeKey: value.get!Bson])]));
+  //   response.writeVoidBody();
+  // }
 }

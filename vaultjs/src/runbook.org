@@ -2,35 +2,120 @@
 #+AUTHOR: Ray Perry
 
 #+BEGIN_SRC restclient
-GET http://localhost:8080/files/list/381
+GET http://localhost:8080/files/list/1033811
 #+END_SRC
 
 #+RESULTS:
 #+BEGIN_SRC js
 [
   {
-    "_id": "5d54c867f904b637b0a62983",
-    "parentId": "381",
-    "fileId": "5d54c75521f4fc4337f5a6cf",
-    "ownerId": "381",
-    "permissions": 5,
-    "attributes": [],
+    "parentId": "1033811",
+    "fileId": "5d556f8d1bfb8292093f25b4",
+    "ownerId": "1033811",
+    "permissions": 7,
+    "attributes": [
+      "5d556f8d1bfb8292093f25b6"
+    ],
+    "fileName": "testFile2.txt",
+    "fileType": "text",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "creatorId": "1033811",
+    "isEmbeddable": true
+  },
+  {
+    "parentId": "1033811",
+    "fileId": "5d556f8d1bfb8292093f25b7",
+    "ownerId": "1033811",
+    "permissions": 7,
+    "attributes": [
+      "5d556f8d1bfb8292093f25b9"
+    ],
+    "fileName": "testFile3.txt",
+    "fileType": "text",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "creatorId": "1033811",
+    "isEmbeddable": true
+  },
+  {
+    "parentId": "1033811",
+    "fileId": "5d556f8d1bfb8292093f25ba",
+    "ownerId": "1033811",
+    "permissions": 7,
+    "attributes": [
+      "5d556f8d1bfb8292093f25bc"
+    ],
     "fileName": "testFile4.txt",
     "fileType": "text",
     "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
-    "creatorId": 8581938,
+    "creatorId": "1033811",
+    "isEmbeddable": true
+  },
+  {
+    "parentId": "1033811",
+    "fileId": "5d556f8d1bfb8292093f25c0",
+    "ownerId": "1033811",
+    "permissions": 7,
+    "attributes": [
+      "5d556f8d1bfb8292093f25c2"
+    ],
+    "fileName": "testFile6.txt",
+    "fileType": "text",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "creatorId": "1033811",
+    "isEmbeddable": true
+  },
+  {
+    "parentId": "1033811",
+    "fileId": "5d556f8d1bfb8292093f25c3",
+    "ownerId": "1033811",
+    "permissions": 7,
+    "attributes": [
+      "5d556f8d1bfb8292093f25c5"
+    ],
+    "fileName": "testFile7.txt",
+    "fileType": "text",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "creatorId": "1033811",
+    "isEmbeddable": true
+  },
+  {
+    "parentId": "1033811",
+    "fileId": "5d556f8d1bfb8292093f25c6",
+    "ownerId": "1033811",
+    "permissions": 7,
+    "attributes": [
+      "5d556f8d1bfb8292093f25c8"
+    ],
+    "fileName": "testFile8.txt",
+    "fileType": "text",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "creatorId": "1033811",
+    "isEmbeddable": true
+  },
+  {
+    "parentId": "1033811",
+    "fileId": "5d556f8d1bfb8292093f25cc",
+    "ownerId": "1033811",
+    "permissions": 7,
+    "attributes": [
+      "5d556f8d1bfb8292093f25ce"
+    ],
+    "fileName": "testFile10.txt",
+    "fileType": "text",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "creatorId": "1033811",
     "isEmbeddable": true
   }
 ]
-// GET http://localhost:8080/files/list/381
+// GET http://localhost:8080/files/list/1033811
 // HTTP/1.1 200 OK
 // X-Powered-By: Express
 // Content-Type: application/json; charset=utf-8
-// Content-Length: 343
-// ETag: W/"157-tr5WbgPI3oE9ZNYVDaIEjeLZoC4"
-// Date: Thu, 15 Aug 2019 13:51:22 GMT
+// Content-Length: 2417
+// ETag: W/"971-fSf3sdCz4SpnbKMBM8fScaEqw4M"
+// Date: Thu, 15 Aug 2019 15:08:23 GMT
 // Connection: keep-alive
-// Request duration: 0.050151s
+// Request duration: 0.021348s
 #+END_SRC
 
 #+BEGIN_SRC restclient
@@ -114,4 +199,29 @@ Content-Type: application/json
 // Connection: keep-alive
 // Content-Length: 0
 // Request duration: 0.019060s
+#+END_SRC
+
+#+BEGIN_SRC restclient
+GET http://localhost:8080/attributes/list/5d556f8d1bfb8292093f25b4
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC js
+[
+  {
+    "attributeId": "5d556f8d1bfb8292093f25b6",
+    "attributeName": "attribute2",
+    "attributeColor": "#436a34"
+  }
+]
+// GET http://localhost:8080/attributes/list/5d556f8d1bfb8292093f25b4
+// HTTP/1.1 200 OK
+// X-Powered-By: Express
+// Access-Control-Allow-Origin: *
+// Content-Type: application/json; charset=utf-8
+// Content-Length: 100
+// ETag: W/"64-mO8Il6l92rkr7E/WsVAJ9+Ym53w"
+// Date: Thu, 15 Aug 2019 16:35:25 GMT
+// Connection: keep-alive
+// Request duration: 0.017282s
 #+END_SRC

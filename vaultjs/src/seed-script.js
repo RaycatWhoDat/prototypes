@@ -16,7 +16,7 @@ const baseOperations = {
 };
 
 const allGeneratedFileIds = [];
-const creatorId = NumberInt(Math.floor(Math.random() * 9999999) + 1);
+const creatorId = String(Math.floor(Math.random() * 9999999) + 1);
 
 for (let index = 0; index < SEED_SETTINGS.files; index++) {
     const fileId = new ObjectId();

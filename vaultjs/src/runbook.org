@@ -1,0 +1,117 @@
+#+TITLE: Vault Runbook
+#+AUTHOR: Ray Perry
+
+#+BEGIN_SRC restclient
+GET http://localhost:8080/files/list/381
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC js
+[
+  {
+    "_id": "5d54c867f904b637b0a62983",
+    "parentId": "381",
+    "fileId": "5d54c75521f4fc4337f5a6cf",
+    "ownerId": "381",
+    "permissions": 5,
+    "attributes": [],
+    "fileName": "testFile4.txt",
+    "fileType": "text",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "creatorId": 8581938,
+    "isEmbeddable": true
+  }
+]
+// GET http://localhost:8080/files/list/381
+// HTTP/1.1 200 OK
+// X-Powered-By: Express
+// Content-Type: application/json; charset=utf-8
+// Content-Length: 343
+// ETag: W/"157-tr5WbgPI3oE9ZNYVDaIEjeLZoC4"
+// Date: Thu, 15 Aug 2019 13:51:22 GMT
+// Connection: keep-alive
+// Request duration: 0.050151s
+#+END_SRC
+
+#+BEGIN_SRC restclient
+GET http://localhost:8080/files/fetch/5d54c75521f4fc4337f5a6cf
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC js
+[
+  {
+    "creatorId": 8581938,
+    "fileName": "testFile4.txt",
+    "fileType": "text",
+    "fileId": "5d54c75521f4fc4337f5a6cf",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "isEmbeddable": true
+  }
+]
+// GET http://localhost:8080/files/fetch/5d54c75521f4fc4337f5a6cf
+// HTTP/1.1 200 OK
+// X-Powered-By: Express
+// Content-Type: application/json; charset=utf-8
+// Content-Length: 245
+// ETag: W/"f5-SFoGDVdPnA7A/xK2a/40OEsNS2U"
+// Date: Thu, 15 Aug 2019 02:46:08 GMT
+// Connection: keep-alive
+// Request duration: 0.010746s
+#+END_SRC
+
+#+BEGIN_SRC restclient
+PUT http://localhost:8080/files/update/5d51cb4882beee3094e2a3c2
+Content-Type: application/json
+
+{
+"fileName": "testFile1.txt"
+}
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC js
+// PUT http://localhost:8080/files/update/5d51cb4882beee3094e2a3c2
+// HTTP/1.1 202 Accepted
+// X-Powered-By: Express
+// Date: Thu, 15 Aug 2019 01:29:41 GMT
+// Connection: keep-alive
+// Content-Length: 0
+// Request duration: 0.031338s
+#+END_SRC
+
+#+BEGIN_SRC restclient
+DELETE http://localhost:8080/files/delete/5d547d4e52f1cf2f43585a3f
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC js
+// DELETE http://localhost:8080/files/delete/5d547d4e52f1cf2f43585a3f
+// HTTP/1.1 200 OK
+// X-Powered-By: Express
+// Date: Thu, 15 Aug 2019 02:13:40 GMT
+// Connection: keep-alive
+// Content-Length: 0
+// Request duration: 0.019436s
+#+END_SRC
+
+#+BEGIN_SRC restclient
+POST http://localhost:8080/files/copy/5d54c75521f4fc4337f5a6cf
+Content-Type: application/json
+
+{
+"userId": "381",
+"permissions": 5
+}
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC js
+// POST http://localhost:8080/files/copy/5d54c75521f4fc4337f5a6cf
+// HTTP/1.1 201 Created
+// X-Powered-By: Express
+// Date: Thu, 15 Aug 2019 02:50:15 GMT
+// Connection: keep-alive
+// Content-Length: 0
+// Request duration: 0.019060s
+#+END_SRC

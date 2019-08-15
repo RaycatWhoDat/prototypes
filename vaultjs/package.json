@@ -1,0 +1,19 @@
+{
+  "name": "vaultjs",
+  "version": "0.5.0",
+  "description": "A simple filesystem.",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Ray Perry",
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.0",
+    "@types/lodash": "^4.14.136",
+    "@types/mongodb": "^3.2.2",
+    "@types/node": "^12.7.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "mongodb": "^3.3.0"
+  }
+}

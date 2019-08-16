@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { VaultFile } from './vault-constants';
+import { VaultFile, generateFullFilePipeline, generatePartialFilePipeline } from './vault-constants';
 import { Db, MongoClient, ObjectId } from 'mongodb';
 import { get, isNil, isEmpty } from 'lodash';
 
@@ -38,17 +38,16 @@ client.connect((error: any) => {
 
     server.get('/files/list/:fileId', listFiles(database));
     server.get('/files/fetch/:fileId', getFile(database));
+    server.get('/files/search/:searchTerm', searchFiles(database));
     server.get('/attributes/list/:fileId', getAttributes(database));
     server.post('/files/copy/:fileId', jsonParser, copyFile(database));
     server.put('/files/update/:fileId', jsonParser, updateFile(database));
     server.delete('/files/delete/:fileId', jsonParser, deleteFile(database));
 
-    server.listen(port, rootHandler);
+    server.listen(port, () => console.log(`Vault running on ${port}!`));
 });
 
 // Functions
-
-const rootHandler = () => console.log(`Vault running on ${port}!`);
 
 const validObjectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
 const isValidObjectId = (objectId: string) => validObjectIdRegex.test(objectId);
@@ -62,46 +61,12 @@ const listFiles = (database: Db) => (request: Request, response: Response) => {
 
     if (isNil(parentId)) return response.status(404).send();
 
-    const fullFilePipeline = [
-        {
-            $match: { parentId }
-        }, {
-            $lookup: {
-                'from': 'files',
-                'localField': 'fileId',
-                'foreignField': '_id',
-                'as': 'fileInformation'
-            }
-        }, {
-            $unwind: '$fileInformation'
-        }, {
-            $lookup: {
-                'from': 'sources',
-                'localField': 'fileInformation.sourceId',
-                'foreignField': '_id',
-                'as': 'sourceInformation'
-            }
-        }, {
-            $unwind: '$sourceInformation'
-        }, {
-            $project: {
-                '_id': 0,
-                'fileId': 1,
-                'fileName': '$fileInformation.fileName',
-                'fileType': '$fileInformation.fileType',
-                'parentId': 1,
-                'source': '$sourceInformation.sourceData',
-                'ownerId': 1,
-                'creatorId': '$fileInformation.creatorId',
-                'permissions': 1,
-                'attributes': 1,
-                'isEmbeddable': '$sourceInformation.isEmbeddable'
-            }
-        }
-    ];
+    const matchOperation = {
+        $match: { parentId }
+    };
 
     relationshipsCollection
-        .aggregate(fullFilePipeline)
+        .aggregate(generateFullFilePipeline(matchOperation))
         .toArray((_, allFiles: any[]) => {
             response.json(allFiles);
         });
@@ -116,35 +81,12 @@ const getFile = (database: Db) => (request: Request, response: Response) => {
 
     if (isNil(_id)) return response.status(404).send();
 
-    const partialFilePipeline = [
-        {
-            $match: { _id }
-        }, {
-            $lookup: {
-                from: 'sources',
-                localField: 'sourceId',
-                foreignField: '_id',
-                as: 'sourceInformation'
-            }
-        }, {
-            $unwind: '$sourceInformation'
-        }, {
-            $project: {
-                '_id': 0,
-                'fileId': '$_id',
-                'fileName': 1,
-                'fileType': 1,
-                'source': '$sourceInformation.sourceData',
-                'ownerId': 1,
-                'creatorId': 1,
-                'attributes': 1,
-                'isEmbeddable': '$sourceInformation.isEmbeddable'
-            }
-        }
-    ];
+    const matchOperation = {
+        $match: { _id }
+    };
 
     filesCollection
-        .aggregate(partialFilePipeline)
+        .aggregate(generatePartialFilePipeline(matchOperation))
         .toArray((_, selectedFile: Partial<VaultFile>[]) => {
             response.json(selectedFile);
         });
@@ -270,6 +212,28 @@ const getAttributes = (database: Db) => (request: Request, response: Response) =
 
     relationshipsCollection
         .aggregate(attributePipeline)
+        .toArray((_, allFiles: any[]) => {
+            response.json(allFiles);
+        });
+};
+
+const searchFiles = (database: Db) => (request: Request, response: Response) => {
+    const filesCollection = database.collection('files');
+    const searchTerm = get(request, ['params', 'searchTerm'], null);
+
+    if (isNil(searchTerm)) return response.status(404).send();
+
+    const matchOperation = {
+        $match: {
+            'fileName': {
+                $regex: searchTerm,
+                $options: 'i'
+            }
+        }
+    }
+
+    filesCollection
+        .aggregate(generatePartialFilePipeline(matchOperation))
         .toArray((_, allFiles: any[]) => {
             response.json(allFiles);
         });

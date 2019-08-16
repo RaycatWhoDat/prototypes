@@ -2,120 +2,158 @@
 #+AUTHOR: Ray Perry
 
 #+BEGIN_SRC restclient
-GET http://localhost:8080/files/list/1033811
+GET http://localhost:8080/files/list/8600941
 #+END_SRC
 
 #+RESULTS:
 #+BEGIN_SRC js
 [
   {
-    "parentId": "1033811",
-    "fileId": "5d556f8d1bfb8292093f25b4",
-    "ownerId": "1033811",
+    "parentId": "8600941",
+    "fileId": "5d55eec787f3d352d3ca5770",
+    "ownerId": "8600941",
     "permissions": 7,
     "attributes": [
-      "5d556f8d1bfb8292093f25b6"
+      "5d55eec787f3d352d3ca5772"
     ],
     "fileName": "testFile2.txt",
     "fileType": "text",
-    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
-    "creatorId": "1033811",
+    "dateCreated": 1565912775664,
+    "sourceId": "5d55eec787f3d352d3ca5771",
+    "creatorId": "8600941",
     "isEmbeddable": true
   },
   {
-    "parentId": "1033811",
-    "fileId": "5d556f8d1bfb8292093f25b7",
-    "ownerId": "1033811",
+    "parentId": "8600941",
+    "fileId": "5d55eec787f3d352d3ca5773",
+    "ownerId": "8600941",
     "permissions": 7,
     "attributes": [
-      "5d556f8d1bfb8292093f25b9"
+      "5d55eec787f3d352d3ca5775"
     ],
     "fileName": "testFile3.txt",
     "fileType": "text",
-    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
-    "creatorId": "1033811",
+    "dateCreated": 1565912775664,
+    "sourceId": "5d55eec787f3d352d3ca5774",
+    "creatorId": "8600941",
     "isEmbeddable": true
   },
   {
-    "parentId": "1033811",
-    "fileId": "5d556f8d1bfb8292093f25ba",
-    "ownerId": "1033811",
+    "parentId": "8600941",
+    "fileId": "5d55eec787f3d352d3ca5776",
+    "ownerId": "8600941",
     "permissions": 7,
     "attributes": [
-      "5d556f8d1bfb8292093f25bc"
+      "5d55eec787f3d352d3ca5778"
     ],
     "fileName": "testFile4.txt",
     "fileType": "text",
-    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
-    "creatorId": "1033811",
+    "dateCreated": 1565912775664,
+    "sourceId": "5d55eec787f3d352d3ca5777",
+    "creatorId": "8600941",
     "isEmbeddable": true
   },
   {
-    "parentId": "1033811",
-    "fileId": "5d556f8d1bfb8292093f25c0",
-    "ownerId": "1033811",
+    "parentId": "8600941",
+    "fileId": "5d55eec787f3d352d3ca5779",
+    "ownerId": "8600941",
     "permissions": 7,
     "attributes": [
-      "5d556f8d1bfb8292093f25c2"
+      "5d55eec787f3d352d3ca577b"
+    ],
+    "fileName": "testFile5.txt",
+    "fileType": "text",
+    "dateCreated": 1565912775664,
+    "sourceId": "5d55eec787f3d352d3ca577a",
+    "creatorId": "8600941",
+    "isEmbeddable": true
+  },
+  {
+    "parentId": "8600941",
+    "fileId": "5d55eec787f3d352d3ca577c",
+    "ownerId": "8600941",
+    "permissions": 7,
+    "attributes": [
+      "5d55eec787f3d352d3ca577e"
     ],
     "fileName": "testFile6.txt",
     "fileType": "text",
-    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
-    "creatorId": "1033811",
+    "dateCreated": 1565912775664,
+    "sourceId": "5d55eec787f3d352d3ca577d",
+    "creatorId": "8600941",
     "isEmbeddable": true
   },
   {
-    "parentId": "1033811",
-    "fileId": "5d556f8d1bfb8292093f25c3",
-    "ownerId": "1033811",
+    "parentId": "8600941",
+    "fileId": "5d55eec787f3d352d3ca577f",
+    "ownerId": "8600941",
     "permissions": 7,
     "attributes": [
-      "5d556f8d1bfb8292093f25c5"
+      "5d55eec787f3d352d3ca5781"
     ],
     "fileName": "testFile7.txt",
     "fileType": "text",
-    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
-    "creatorId": "1033811",
+    "dateCreated": 1565912775664,
+    "sourceId": "5d55eec787f3d352d3ca5780",
+    "creatorId": "8600941",
     "isEmbeddable": true
   },
   {
-    "parentId": "1033811",
-    "fileId": "5d556f8d1bfb8292093f25c6",
-    "ownerId": "1033811",
+    "parentId": "8600941",
+    "fileId": "5d55eec787f3d352d3ca5782",
+    "ownerId": "8600941",
     "permissions": 7,
     "attributes": [
-      "5d556f8d1bfb8292093f25c8"
+      "5d55eec787f3d352d3ca5784"
     ],
     "fileName": "testFile8.txt",
     "fileType": "text",
-    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
-    "creatorId": "1033811",
+    "dateCreated": 1565912775664,
+    "sourceId": "5d55eec787f3d352d3ca5783",
+    "creatorId": "8600941",
     "isEmbeddable": true
   },
   {
-    "parentId": "1033811",
-    "fileId": "5d556f8d1bfb8292093f25cc",
-    "ownerId": "1033811",
+    "parentId": "8600941",
+    "fileId": "5d55eec787f3d352d3ca5785",
+    "ownerId": "8600941",
     "permissions": 7,
     "attributes": [
-      "5d556f8d1bfb8292093f25ce"
+      "5d55eec787f3d352d3ca5787"
+    ],
+    "fileName": "testFile9.txt",
+    "fileType": "text",
+    "dateCreated": 1565912775664,
+    "sourceId": "5d55eec787f3d352d3ca5786",
+    "creatorId": "8600941",
+    "isEmbeddable": true
+  },
+  {
+    "parentId": "8600941",
+    "fileId": "5d55eec787f3d352d3ca5788",
+    "ownerId": "8600941",
+    "permissions": 7,
+    "attributes": [
+      "5d55eec787f3d352d3ca578a"
     ],
     "fileName": "testFile10.txt",
     "fileType": "text",
-    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
-    "creatorId": "1033811",
+    "dateCreated": 1565912775664,
+    "sourceId": "5d55eec787f3d352d3ca5789",
+    "creatorId": "8600941",
     "isEmbeddable": true
   }
 ]
-// GET http://localhost:8080/files/list/1033811
+// GET http://localhost:8080/files/list/8600941
 // HTTP/1.1 200 OK
 // X-Powered-By: Express
+// Access-Control-Allow-Origin: *
 // Content-Type: application/json; charset=utf-8
-// Content-Length: 2417
-// ETag: W/"971-fSf3sdCz4SpnbKMBM8fScaEqw4M"
-// Date: Thu, 15 Aug 2019 15:08:23 GMT
+// Content-Length: 2612
+// ETag: W/"a34-gUhcYq1u+eh7s+huokePbzxWUz8"
+// Date: Fri, 16 Aug 2019 01:40:53 GMT
 // Connection: keep-alive
-// Request duration: 0.021348s
+// Request duration: 0.011373s
 #+END_SRC
 
 #+BEGIN_SRC restclient
@@ -224,4 +262,42 @@ GET http://localhost:8080/attributes/list/5d556f8d1bfb8292093f25b4
 // Date: Thu, 15 Aug 2019 16:35:25 GMT
 // Connection: keep-alive
 // Request duration: 0.017282s
+#+END_SRC
+
+#+BEGIN_SRC restclient
+GET http://localhost:8080/files/search/testFile1
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC js
+[
+  {
+    "creatorId": "8600941",
+    "fileName": "testFile1.txt",
+    "fileType": "text",
+    "dateCreated": "2019-08-16T01:54:01.211Z",
+    "fileId": "5d560cb9d7abbe84e1d01eb3",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "isEmbeddable": true
+  },
+  {
+    "creatorId": "8600941",
+    "fileName": "testFile10.txt",
+    "fileType": "text",
+    "dateCreated": "2019-08-16T01:54:01.211Z",
+    "fileId": "5d560cb9d7abbe84e1d01ece",
+    "source": "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "isEmbeddable": true
+  }
+]
+// GET http://localhost:8080/files/search/testFile1
+// HTTP/1.1 200 OK
+// X-Powered-By: Express
+// Access-Control-Allow-Origin: *
+// Content-Type: application/json; charset=utf-8
+// Content-Length: 576
+// ETag: W/"240-YZeT0PBtJkc8CfeyO9WetIPE1T8"
+// Date: Fri, 16 Aug 2019 01:54:11 GMT
+// Connection: keep-alive
+// Request duration: 0.008683s
 #+END_SRC

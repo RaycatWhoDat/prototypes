@@ -16,7 +16,20 @@ const baseOperations = {
 };
 
 const allGeneratedFileIds = [];
-const creatorId = String(Math.floor(Math.random() * 9999999) + 1);
+// ampfirm.admin@runoranj.com
+const creatorId = String(8600941); //String(Math.floor(Math.random() * 9999999) + 1);
+const dateCreated = new Date();
+
+    // TEXT = 'text',
+    // NOTE = 'note',
+    // CHATROOM = 'chatroom',
+    // MESSAGE = 'message'
+const possibleFileTypes = [
+    'text',
+    'note',
+    'chatroom',
+    'message'
+];
 
 for (let index = 0; index < SEED_SETTINGS.files; index++) {
     const fileId = new ObjectId();
@@ -24,22 +37,37 @@ for (let index = 0; index < SEED_SETTINGS.files; index++) {
 
     const sourceId = new ObjectId();
     const attributeId = new ObjectId();
+
+    const fileType = possibleFileTypes[Math.floor(Math.random() * 3)];
+    const fileNameMapping = {
+        'text': 'textFile',
+        'note': 'note',
+        'chatroom': 'chatroom',
+        'message': 'message'
+    };
+
+    const fileName = [
+        `${fileNameMapping[fileType]}`,
+        `${index + 1}`,
+        `${fileType === 'text' ? '.txt' : ''}`
+    ].join('');
     
     const newFile = {
         _id: fileId,
         creatorId,
-        fileName: `testFile${index + 1}.txt`,
-        fileType: 'text'
+        fileName,
+        fileType,
+        dateCreated,
+        sourceId
     };
 
-    if (Math.random() < 0.8) newFile.sourceId = sourceId;
-    
     const newRelationship = {
         parentId: creatorId,
         fileId,
         ownerId: creatorId,
         permissions: NumberInt(7),
-        attributes: [attributeId]
+        attributes: [attributeId],
+        dateCreated
     };
 
     const newSource = {
@@ -69,7 +97,8 @@ for (let index = 0; index < SEED_SETTINGS.relationships - SEED_SETTINGS.files; i
         fileId,
         ownerId: creatorId,
         permissions: NumberInt(7),
-        attributes: []
+        attributes: [],
+        dateCreated
     };
     
     baseOperations.relationships.push({ insertOne: { document: newRelationship }});

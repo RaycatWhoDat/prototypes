@@ -40,8 +40,12 @@ client.connect((error: any) => {
     server.get('/files/fetch/:fileId', getFile(database));
     server.get('/files/search/:searchTerm', searchFiles(database));
     server.get('/attributes/list/:fileId', getAttributes(database));
+
+    server.post('/files/create/:fileId', jsonParser, createFile(database));
     server.post('/files/copy/:fileId', jsonParser, copyFile(database));
+
     server.put('/files/update/:fileId', jsonParser, updateFile(database));
+
     server.delete('/files/delete/:fileId', jsonParser, deleteFile(database));
 
     server.listen(port, () => console.log(`Vault running on ${port}!`));
@@ -112,10 +116,14 @@ const updateFile = (database: Db) => (request: Request, response: Response) => {
     if (isEmpty(formattedPayload)) return response.status(304).send();
 
     const filesCollection = database.collection('files');
-    const _id = get(request, ['params', 'fileId'], null);
+    let _id = get(request, ['params', 'fileId'], null);
+    _id = isValidObjectId(_id)
+        ? new ObjectId(_id)
+        : _id;
+
     filesCollection
         .updateOne({ _id }, { '$set': formattedPayload })
-        .then(_ => {
+        .then(result => {
             response.status(202).send();
         }, error => {
             console.error(error);
@@ -161,7 +169,7 @@ const deleteFile = (database: Db) => (request: Request, response: Response) => {
 
     const deleteOperation = {
         deleteMany: {
-            'filter': {
+            filter: {
                 $or: [
                     { parentId: selectedId },
                     { fileId: selectedId }
@@ -239,3 +247,65 @@ const searchFiles = (database: Db) => (request: Request, response: Response) => 
         });
 };
 
+const createFile = (database: Db) => async (request: Request, response: Response) => {
+    const filesCollection = database.collection('files');
+    const relationshipsCollection = database.collection('relationships');
+    const sourcesCollection = database.collection('sources');
+
+    let parentId = get(request, ['params', 'fileId'], null);
+    parentId = isValidObjectId(parentId)
+        ? new ObjectId(parentId)
+        : parentId;
+
+    const rawPayload = get(request, ['body'], {});
+
+    if (isNil(rawPayload) || !rawPayload.source || !rawPayload.creatorId) {
+        return response.status(400).send();
+    }
+
+    const fileName = rawPayload.fileName || `newFile-${Date.now()}`;
+    const fileType = rawPayload.fileType || 'text';
+    const creatorId = rawPayload.creatorId;
+    const dateCreated = new Date();
+    const sourceData = rawPayload.source;
+    const isEmbeddable = rawPayload.isEmbeddable || false;
+
+    sourcesCollection
+        .insertOne({ sourceData, isEmbeddable })
+        .then(result => {
+            const newFile = {
+                creatorId,
+                fileName,
+                fileType,
+                dateCreated,
+                sourceId: result.insertedId
+            };
+
+            filesCollection
+                .insertOne(newFile)
+                .then(result => {
+                    const newRelationship = {
+                        parentId,
+                        fileId: result.insertedId,
+                        ownerId: creatorId,
+                        permissions: 7,
+                        attributes: [],
+                        dateCreated
+                    };
+
+                    relationshipsCollection
+                        .insertOne(newRelationship)
+                        .then(_ => {
+                            response.status(200).send();
+                        }, error => {
+                            console.error(error);
+                            response.status(500).send();
+                        });
+                }, error => {
+                    console.error(error);
+                });
+
+        }, error => {
+            console.error(error);
+        });
+};

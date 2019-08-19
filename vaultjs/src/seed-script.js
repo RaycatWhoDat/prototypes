@@ -19,8 +19,8 @@ const baseOperations = {
 
 const allGeneratedFileIds = [];
 const allGeneratedAgreementIds = [];
-// ampfirm.admin@runoranj.com
-const creatorId = String(8600941); //String(Math.floor(Math.random() * 9999999) + 1);
+
+const creatorId = String(Math.floor(Math.random() * 9999999) + 1);
 const dateCreated = new Date();
 
 const possibleFileTypes = [

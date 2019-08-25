@@ -1,0 +1,4 @@
+-lib tink_cli
+-cp src
+-main Application
+-neko dist/Gix.n

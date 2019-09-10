@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { VaultFile, generateFullFilePipeline, generatePartialFilePipeline } from './vault-constants';
+import { VaultFile, generateFullFilePipeline, generatePartialFilePipeline, generateFullFileWithSourcesPipeline } from './vault-constants';
 import { Db, MongoClient, ObjectId } from 'mongodb';
 import { get, isNil, isEmpty } from 'lodash';
 
@@ -40,6 +40,8 @@ client.connect((error: any) => {
     server.get('/files/fetch/:fileId', getFile(database));
     server.get('/files/search/:searchTerm', searchFiles(database));
     server.get('/attributes/list/:fileId', getAttributes(database));
+
+    server.get('/files/sources/:fileId', getAllNotes(database));
 
     server.post('/files/create/:fileId', jsonParser, createFile(database));
     server.post('/files/copy/:fileId', jsonParser, copyFile(database));
@@ -307,5 +309,25 @@ const createFile = (database: Db) => async (request: Request, response: Response
 
         }, error => {
             console.error(error);
+        });
+};
+
+const getAllNotes = (database: Db) => async (request: Request, response: Response) => {
+    const relationshipsCollection = database.collection('relationships');
+    let parentId = get(request, ['params', 'fileId'], null);
+    parentId = isValidObjectId(parentId)
+        ? new ObjectId(parentId)
+        : parentId;
+
+    if (isNil(parentId)) return response.status(404).send();
+
+    const matchOperation = {
+        $match: { parentId }
+    };
+
+    relationshipsCollection
+        .aggregate(generateFullFileWithSourcesPipeline(matchOperation))
+        .toArray((_, allFiles: any[]) => {
+            response.json(allFiles);
         });
 };

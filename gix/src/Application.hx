@@ -7,11 +7,23 @@ import sys.io.Process;
 import tink.cli.*;
 import tink.Cli;
 
+using Application.VersionInfo;
+
+class VersionInfo {
+    static public function getVersionString(_version: StringMap<Int>): String {
+        return [
+            _version.get('major'),
+            _version.get('minor'),
+            _version.get('patch')
+        ].join('.');
+    }
+}
+
 class Application {
     static var version: StringMap<Int> = [
         'major' => 0,
         'minor' => 1,
-        'patch' => 2
+        'patch' => 4
     ];
     
     public function new() {}
@@ -20,11 +32,7 @@ class Application {
     public function run(rest: Rest<String>) {
         var message = [
             'Gix',
-            [
-                version.get('major'),
-                version.get('minor'),
-                version.get('patch')
-            ].join('.'),
+            version.getVersionString(),
             '© Ray Perry 2019 - present.'
         ].join(' ');
         Sys.println(message);

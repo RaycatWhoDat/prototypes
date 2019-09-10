@@ -78,6 +78,54 @@ export const generateFullFilePipeline = (additionalOperations: any | any[] = [])
     ]);
 };
 
+export const generateFullFileWithSourcesPipeline = (additionalOperations: any | any[] = []) => {
+    const _additionalOperations = Array.isArray(additionalOperations)
+        ? additionalOperations
+        : [additionalOperations];
+
+    return _additionalOperations.concat([
+        {
+            $lookup: {
+                'from': 'files',
+                'localField': 'fileId',
+                'foreignField': '_id',
+                'as': 'fileInformation'
+            }
+        }, {
+            $unwind: '$fileInformation'
+        }, {
+            $lookup: {
+                'from': 'sources',
+                'localField': 'fileInformation.sourceId',
+                'foreignField': '_id',
+                'as': 'sourceInformation'
+            }
+        }, {
+            $unwind: '$sourceInformation'
+        }, {
+            $project: {
+                '_id': 0,
+                'fileId': 1,
+                'fileName': '$fileInformation.fileName',
+                'fileType': '$fileInformation.fileType',
+                'dateCreated': {
+                    $subtract: [
+                        "$fileInformation.dateCreated",
+                        new Date("1970-01-01")
+                    ]
+                },
+                'parentId': 1,
+                'source': '$sourceInformation.sourceData',
+                'ownerId': 1,
+                'creatorId': '$fileInformation.creatorId',
+                'permissions': 1,
+                'attributes': 1,
+                'isEmbeddable': '$sourceInformation.isEmbeddable'
+            }
+        }
+    ]);
+};
+
 export const generatePartialFilePipeline = (additionalOperations: any | any[] = []) => {
     const _additionalOperations = Array.isArray(additionalOperations)
         ? additionalOperations

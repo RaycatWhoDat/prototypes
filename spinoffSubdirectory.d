@@ -45,8 +45,11 @@ int main(string[] args) {
     auto resetOrigin = execute(["git", "remote", "set-url", "origin", ORIGINAL_REPO_NAME]);
     if (!hasSucceeded(resetOrigin)) return 5;
 
-    auto resetLocal = execute(["git", "reset", "--hard", "origin", "master"]);
-    if (!hasSucceeded(resetLocal)) return 6;
+    auto fetchNewOrigin = execute(["git", "fetch", "--all"]);
+    if (!hasSucceeded(fetchNewOrigin)) return 6;
+        
+    auto resetLocal = execute(["git", "reset", "--hard", "origin/master"]);
+    if (!hasSucceeded(resetLocal)) return 7;
     
     return 0;
   }

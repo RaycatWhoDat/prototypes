@@ -10,7 +10,8 @@ grammar RakuLisp::Parser {
     token bool:sym<false>   {  '#f'  }
     
     proto token number { * }
-    token number:sym<int> { <[-+]>? \d+ }
+    token number:sym<integer> { <[-+]>? \d+ }
+    token number:sym<float> { <[-+]>? [ \d+ ]? '.' \d+ }
 
     proto token atom { * }
     token atom:sym<bool>   { <bool>   }
@@ -31,13 +32,14 @@ class RakuLisp::Actions {
     method atom:sym<symbol>($/) { say "This is a symbol: " ~ $/ }
     method atom:sym<string>($/) { say "This is a string: " ~ $/ }
     method atom:sym<number>($/) { say "This is a number: " ~ $/ }
+    method atom:sym<quote>($/) { say "This is a quoted statement: " ~ $/ }
+    method number:sym<float>($/) { say "This is a float: " ~ $/ }
+    method TOP($/) { say $/ }
 }
 
 sub MAIN() {
-    my $raw-lisp = '(define test-func () "This is a test func." (interactive) (message "Test fun.") (+ 1 2))';
+    my $raw-lisp = "(define test-func () \"This is a test func.\" (interactive) (message \"Test fun.\") (+ 1 2 3.4 (map \'+ \'(1 2 3 4 5 6)))";
     my $parsed-lisp = RakuLisp::Parser.parse($raw-lisp, actions => RakuLisp::Actions.new);
-
-    say $parsed-lisp;
 } 
 
 # Local Variables:

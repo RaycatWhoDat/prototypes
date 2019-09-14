@@ -10,6 +10,7 @@ import std.format;
 import std.typecons;
 
 int main(string[] args) {
+  const string ORIGINAL_REPO_NAME = "git@github.com:RayMPerry/prototypes.git";
   string FOLDER_NAME, BRANCH_NAME, REPO_NAME;
 
   getopt(args,
@@ -41,6 +42,12 @@ int main(string[] args) {
     auto pushToOrigin = execute(["git", "push", "-u", "origin", "master"]);
     if (!hasSucceeded(pushToOrigin)) return 4;
 
+    auto resetOrigin = execute(["git", "remote", "set-url", "origin", ORIGINAL_REPO_NAME]);
+    if (!hasSucceeded(resetOrigin)) return 5;
+
+    auto resetLocal = execute(["git", "reset", "--hard", "origin", "master"]);
+    if (!hasSucceeded(resetLocal)) return 6;
+    
     return 0;
   }
     

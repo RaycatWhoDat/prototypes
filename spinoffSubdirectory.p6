@@ -24,7 +24,7 @@ sub MAIN(
     <reset --hard origin/master>;
     
     for @commandsToRun -> @command {
-        last if so run("git", |@command);
+        last if not so run("git", |@command);
     }
 }
 

@@ -1,2 +1,5 @@
 **/node_modules/**
 vaultjs/dist/*.js
+
+socket-hub/.haxelib
+socket-hub/dist/*.js

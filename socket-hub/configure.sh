@@ -1,4 +1,5 @@
+rm -rf node_modules dist
 npm i
-haxelib install build-dev.hxml
-haxe build-dev.hxml
-node dist/dev-server.js
+haxelib deleterepo
+haxelib newrepo
+haxelib install all --always

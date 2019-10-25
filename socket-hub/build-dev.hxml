@@ -1,0 +1,13 @@
+-cp src
+-main SocketHub
+
+-L hxnodejs:10.0.0
+-L hxnodelibs:git:https://github.com/HaxeFoundation/hxnodelibs.git#02d3ed4490498f17b3311743e83c7dfcdfc369fa
+
+#-dce full
+
+-D server
+-D analyzer-optimize
+-D js-es=6
+
+-js dist/dev-server.js

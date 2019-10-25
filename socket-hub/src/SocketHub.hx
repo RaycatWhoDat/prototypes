@@ -1,22 +1,27 @@
 package;
 
-import Types;
-import Routes;
+import RouteGenerator;
+import routes.Root;
+
+import externs.Cors;
 
 class SocketHub {
     public static function main() {
-        var app = new Application();
+        var expressApp = new Application();
+        
         var port = process.env.get("PORT") != null ? process.env.get("PORT") : "8080";
 
-        app.set("port", port);
+        expressApp.set("port", port);
 
-        app.use(BodyParser.json());
-        app.use(BodyParser.urlencoded({ extended: true }));
-
-        Routes.attachRoutes(app);
+        expressApp.use(new Cors());
         
-        app.listen(Std.parseInt(app.get("port")), () -> {
-            trace("Now listening on port " + app.get("port"));
-        });
+        expressApp.use(BodyParser.json());
+        expressApp.use(BodyParser.urlencoded({ extended: true }));
+
+        RouteGenerator.attachRoutes(Root, expressApp);
+        
+        expressApp.listen(Std.parseInt(expressApp.get("port")), () -> {
+            trace("Now listening on port " + expressApp.get("port"));
+          });
     }
 }

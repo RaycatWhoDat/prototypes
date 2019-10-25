@@ -1,0 +1,32 @@
+#+TITLE: Haxe Tidbits
+#+AUTHOR: Ray Perry
+
+`clemos-js-kit` is borked at the moment, use `hxnodelibs` instead. (Kinda borked, too - but less so.)
+
+Make sure all your Haxe libs are locked to a version.
+
+`-dce full` tends to rip out things you want. Be careful with it.
+
+If you have a `Dynamic` you're trying to 'access', stuff it into a `DynamicAccess<T>`.
+
+Metadata is actually ridiculous. Use it. You can denote compile-time metadata with `@:` and run-time metadata with `@`.
+
+haxe.ds.Either requires you to return either Left(T) or Right(T) with the appropriate type. `Void` doesn't work here. If you need something like Either<T, Void>, use Null<T> instead.
+
+If you're trying to do pattern matching on a `Dynamic`, try to define a type for it and box it in a variable. That will allow you to do proper field-matching on it.
+
+If you need to call a class method programmatically, you'll need to use Reflect or Type. Reflect got me there but I'm unsure of the nuances versus Type.
+
+An `import.hx` file found at the root of your application will allow you to import types and classes that all modules require.
+
+Haxelib doesn't like it when you try overwriting a git-versioned via `haxelib install`. Make sure you clean up before trying to reinstall something. Otherwise, use `haxelib update`.
+
+Macros are the best way to do things at compile-time but, my God, they do your head in for a while.
+
+If you decide to use macros, they are - by far - the most advanced feature in Haxe. If you ever feel lost, just remember these three things:
+1) A macro is a syntax transformation. Both your input and output should consist of haxe.macro.Exprs.
+2) Go dumb. Don't get cheeky with the compiler. Pretend you're building a string literal.
+3) Output to JS to see how the macro is compiled.
+
+Operating with files is a little bit weird. For high-level manipulation, you want `getContent` and `saveContent`. For low-level manipulation, you want `read` and `write` which will return a `FileInput` and `FileOutput` respectively. Once you have one of those, you can use them with certain operations.
+

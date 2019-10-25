@@ -5,12 +5,11 @@
         <title>Testbed</title>
     </head>
     <body>
-        <script src="http://localhost:8080/socket.io/socket.io.js"></script>
         <script>
-            var socket = io('http://localhost:8080');
-            socket.on('connect', () => { });
-            socket.on('event', data => { });
-            socket.on('disconnect', () => { });
+            const ws = new WebSocket('ws://localhost:8081');
+            
+            ws.onopen = () => ws.send('something');
+            ws.onmessage = (data) => console.log(data);
         </script>
     </body>
 </html>

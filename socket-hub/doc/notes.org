@@ -1,7 +1,7 @@
 #+TITLE: Haxe Tidbits
 #+AUTHOR: Ray Perry
 
-`clemos-js-kit` is borked at the moment, use `hxnodelibs` instead. (Kinda borked, too - but less so.)
+`clemos/haxe-js-kit` is borked at the moment, use `hxnodelibs` instead. (Kinda borked, too - but less so.)
 
 Make sure all your Haxe libs are locked to a version.
 
@@ -30,3 +30,6 @@ If you decide to use macros, they are - by far - the most advanced feature in Ha
 
 Operating with files is a little bit weird. For high-level manipulation, you want `getContent` and `saveContent`. For low-level manipulation, you want `read` and `write` which will return a `FileInput` and `FileOutput` respectively. Once you have one of those, you can use them with certain operations.
 
+`-D no-deprecation-warnings` is a thing.
+
+Using `socket.io` isn't exactly the best. Try using `ws` on the server and vanilla WebSockets on the browser.

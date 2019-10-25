@@ -1,4 +1,4 @@
-rm -rf node_modules dist
+rm -rf node_modules dist .temp
 npm i
 haxelib deleterepo
 haxelib newrepo

@@ -15,13 +15,15 @@ import sys.io.File.saveContent;
 
 using haxe.macro.Tools;
 
-// TODO: Move the static files over to `/assets`.
 class BuildMacros {
+  public static var sourceDirectory = "assets/";
+  
   public static macro function moveStaticFiles() {
-    trace("Copying static files in html/ to dist/...");
+    var sourceDirectory = BuildMacros.sourceDirectory;
+    
+    trace("Copying static files in " + sourceDirectory + " to dist/...");
 
     var sourceParent = "src/";
-    var sourceDirectory = "html/";
     var destinationDirectory = "dist/";
 
     createDirectory(Path.join([destinationDirectory, sourceDirectory]));

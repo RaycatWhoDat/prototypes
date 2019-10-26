@@ -18,15 +18,32 @@ GET :local-socket-hub
 #+END_SRC
 
 #+RESULTS:
-#+BEGIN_SRC js
-"Ready."
-// GET http://localhost:8080
-// HTTP/1.1 200 OK
-// X-Powered-By: Express
-// Content-Type: application/json; charset=utf-8
-// Content-Length: 8
-// ETag: W/"8-fDYWyRQeXUdZiU6ghDdtBvub6uM"
-// Date: Fri, 25 Oct 2019 03:55:38 GMT
-// Connection: keep-alive
-// Request duration: 0.066892s
+#+BEGIN_SRC html
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Admin Dashboard</title>
+        <link href="https://unpkg.com/tachyons@4.11.1/css/tachyons.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <p>Admin Dashboard</p>
+        <script src="admin-dashboard.js"></script>
+    </body>
+</html>
+
+
+<!-- GET http://localhost:8080 -->
+<!-- HTTP/1.1 200 OK -->
+<!-- X-Powered-By: Express -->
+<!-- Access-Control-Allow-Origin: * -->
+<!-- Accept-Ranges: bytes -->
+<!-- Cache-Control: public, max-age=0 -->
+<!-- Last-Modified: Sat, 26 Oct 2019 21:42:50 GMT -->
+<!-- ETag: W/"14e-16e0a059d23" -->
+<!-- Content-Type: text/html; charset=UTF-8 -->
+<!-- Content-Length: 334 -->
+<!-- Date: Sat, 26 Oct 2019 21:43:46 GMT -->
+<!-- Connection: keep-alive -->
+<!-- Request duration: 0.022910s -->
 #+END_SRC

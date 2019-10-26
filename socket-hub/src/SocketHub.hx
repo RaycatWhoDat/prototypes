@@ -5,6 +5,10 @@ import routes.Root;
 
 import externs.Cors;
 
+// TODO: Enum for WebSocket events
+// TODO: Type for WebSocket messages
+// TODO: Class for sending messages
+
 class SocketHub {
     public static function main() {
         var expressApp = new Application();
@@ -16,12 +20,14 @@ class SocketHub {
 
         expressApp.set("port", port);
 
+        expressApp.use(Express.Static("assets"));
+        
         expressApp.use(new Cors());
         expressApp.use(BodyParser.json());
         expressApp.use(BodyParser.urlencoded({ extended: true }));
 
         RouteGenerator.attachRoutes(Root, expressApp);
-        
+
         expressApp.listen(Std.parseInt(expressApp.get("port")), () -> {
             trace("Now listening on port " + expressApp.get("port"));
         });

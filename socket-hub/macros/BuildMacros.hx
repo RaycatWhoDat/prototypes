@@ -15,6 +15,7 @@ import sys.io.File.saveContent;
 
 using haxe.macro.Tools;
 
+// TODO: Move the static files over to `/assets`.
 class BuildMacros {
   public static macro function moveStaticFiles() {
     trace("Copying static files in html/ to dist/...");

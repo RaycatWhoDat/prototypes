@@ -1,0 +1,10 @@
+-cp src
+-cp macros
+
+-L utest
+-L hxnodejs
+-L hxnodelibs
+
+-D analyzer-optimize
+-D js-es=6
+#-D no-deprecation-warnings 

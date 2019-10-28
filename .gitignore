@@ -3,3 +3,5 @@ vaultjs/dist/*.js
 
 socket-hub/.haxelib
 socket-hub/dist/*.js
+
+lix-project-testing/dist/*.js

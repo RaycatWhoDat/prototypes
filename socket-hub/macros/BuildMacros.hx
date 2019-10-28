@@ -3,41 +3,36 @@ package;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 
-import haxe.io.Path;
-
-import sys.FileSystem.createDirectory;
-import sys.FileSystem.readDirectory;
-import sys.FileSystem.exists;
-import sys.FileSystem.deleteFile;
-
-import sys.io.File.getContent;
-import sys.io.File.saveContent;
-
-using haxe.macro.Tools;
+import massive.sys.io.File.*;
 
 class BuildMacros {
-  public static var sourceDirectory = "assets/";
+  public static var sourceRootDirectory = "src/";
+  public static var assetsDirectory = "assets/";
+  public static var pagesDirectory = "pages/";
+  public static var destinationDirectory = "dist/";
   
-  public static macro function moveStaticFiles() {
-    var sourceDirectory = BuildMacros.sourceDirectory;
-    
-    trace("Copying static files in " + sourceDirectory + " to dist/...");
+  public static macro function moveAssets() {
+    var sourceDirectory = Path.of('${BuildMacros.sourceRootDirectory}${BuildMacros.assetsDirectory}');
+    var destinationDirectory = Path.of('${BuildMacros.destinationDirectory}${BuildMacros.assetsDirectory}');
 
-    var sourceParent = "src/";
-    var destinationDirectory = "dist/";
+    trace('Copying assets in ${sourceDirectory.parent} to ${destinationDirectory.parent}...');
 
-    createDirectory(Path.join([destinationDirectory, sourceDirectory]));
-    
-    for (file in readDirectory(Path.join([sourceParent, sourceDirectory]))) {
-      var sourcePath = Path.join([sourceParent + sourceDirectory, file]);
-      var destinationPath = Path.join([destinationDirectory + sourceDirectory, file]);
-      
-      if (exists(destinationPath)) deleteFile(destinationPath);
-      saveContent(destinationPath, getContent(sourcePath));
-    }
+    if (destinationDirectory.exists()) destinationDirectory.toDir().delete(true);
+    sourceDirectory.toDir().copyTo(destinationDirectory);
     
     trace("Done.");
 
+    return macro null;
+  }
+
+  public static macro function movePages() {
+    // var sourceRootDirectory = BuildMacros.sourceRootDirectory;
+    // var pagesDirectory = BuildMacros.pagesDirectory;
+    // var destinationDirectory = BuildMacros.destinationDirectory;
+    // for (directory in readDirectory(Path.join([sourceRootDirectory, pagesDirectory]))) {
+    //   trace('Copying $directory/ to $destinationDirectory...');
+    // }
+    // trace("Done.");
     return macro null;
   }
 }

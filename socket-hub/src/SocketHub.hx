@@ -6,6 +6,8 @@ import routes.Root;
 import externs.Cors;
 
 // TODO: Paths
+// TODO: thx.core, utest, and haxe-files
+// TODO: build system
 
 // TODO: Enum for WebSocket events
 // TODO: Type for WebSocket messages

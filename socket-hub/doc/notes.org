@@ -37,3 +37,5 @@ Using `socket.io` isn't exactly the best. Try using `ws` on the server and vanil
 `Express.Static` is going to body you until you realize that you need to use `Node.__dirname`.
 
 Partial application exists (`.bind`).
+
+If you need to get the name of a EnumValue, you need to `using haxe.EnumTools` and use `getName()` on the enum instance.

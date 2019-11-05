@@ -23,24 +23,42 @@ class Server {
         expressApp.use("/", Express.Static(Node.__dirname));
         
         expressApp.listen(Std.parseInt(expressApp.get("port")), () -> {
-            trace('Server ready.');
+            trace("Server ready.");
             trace("Now listening on port " + expressApp.get("port") + ".");
         });
 
         webSocketServer.on("connection", (socket: WebSocket) -> {
             socket.on("message", (message: String) -> {
-                trace("Received: " + haxe.Json.parse(message));
-            });
+                var clientMove: SocketMessage = haxe.Json.parse(message);
+                trace("Received a move. Countering.");
 
-            var serverMessage = {
-                type: UserDefinedSocketType.MOVE.getName(),
-                data: {
-                    player: 1,
-                    move: ValidMoves.ROCK.getName()
+                var counterMove = switch (clientMove.data.move) {
+                    case ValidMoves.ROCK: ValidMoves.PAPER;
+                    case ValidMoves.PAPER: ValidMoves.SCISSORS;
+                    case ValidMoves.SCISSORS: ValidMoves.SPOCK;
+                    case ValidMoves.SPOCK: ValidMoves.LIZARD;
+                    case ValidMoves.LIZARD: ValidMoves.ROCK;
                 }
-            };
-            
-            socket.send(haxe.Json.stringify(serverMessage));
+
+                // var counterMove;
+                // if (ValidMoves.ROCK.match(clientMove.data.move)) counterMove = ValidMoves.PAPER;
+                // if (ValidMoves.PAPER.match(clientMove.data.move)) counterMove = ValidMoves.SCISSORS;
+                // if (ValidMoves.SCISSORS.match(clientMove.data.move)) counterMove = ValidMoves.SPOCK;
+                // if (ValidMoves.SPOCK.match(clientMove.data.move)) counterMove = ValidMoves.LIZARD;
+                // if (ValidMoves.LIZARD.match(clientMove.data.move)) counterMove = ValidMoves.ROCK;
+
+                // var counterMove = ValidMoves.ROCK;
+                
+                var serverMessage = {
+                    type: UserDefinedSocketType.MOVE,
+                    data: {
+                        player: 1,
+                        move: counterMove
+                    }
+                };
+
+                socket.send(haxe.Json.stringify(serverMessage));
+            });
         });
     }
 }

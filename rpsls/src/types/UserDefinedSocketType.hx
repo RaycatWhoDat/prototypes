@@ -1,5 +1,6 @@
 package types;
 
-enum UserDefinedSocketType {
-    MOVE;
+@:enum
+abstract UserDefinedSocketType(String) {
+    var MOVE = "MOVE";
 }

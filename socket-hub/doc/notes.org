@@ -5,7 +5,7 @@
 
 Make sure all your Haxe libs are locked to a version.
 
-`-dce full` tends to rip out things you want. Be careful with it.
+`-dce full` tends to rip out things you want. Be careful with it. Use `@:keep` when necessary.
 
 If you have a `Dynamic` you're trying to 'access', stuff it into a `DynamicAccess<T>`.
 
@@ -38,4 +38,11 @@ Using `socket.io` isn't exactly the best. Try using `ws` on the server and vanil
 
 Partial application exists (`.bind`).
 
+Enums are more powerful but they act different. Beware the nuances.
+EDIT: Enum abstracts seem to do what you'd expect normal enums to do.
+
+Haxe doesn't give you the name of the enum when stringifying unless you explicitly ask it to.
+
 If you need to get the name of a EnumValue, you need to `using haxe.EnumTools` and use `getName()` on the enum instance.
+
+You can use extractors to perform small transformations while pattern-matching (=>).

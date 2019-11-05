@@ -1,0 +1,3 @@
+-D client
+-main Client
+-js dist/rpsls-client.js

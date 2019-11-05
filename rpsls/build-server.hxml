@@ -1,0 +1,3 @@
+-D server
+-main Server
+-js dist/rpsls-server.js

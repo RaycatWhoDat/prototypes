@@ -1,0 +1,22 @@
+-cp src
+-cp macros
+
+-lib hxnodejs
+-lib hxnodelibs
+-lib tink_core
+-lib tink_lang
+-lib mlib
+
+-D js-es=6
+-D analyzer-optimize
+-D no-deprecation-warnings 
+
+-dce full
+
+--each
+
+--macro BuildMacros.copyPages()
+build-server.hxml
+
+--next
+build-client.hxml

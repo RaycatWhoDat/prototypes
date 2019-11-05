@@ -33,3 +33,7 @@ Operating with files is a little bit weird. For high-level manipulation, you wan
 `-D no-deprecation-warnings` is a thing.
 
 Using `socket.io` isn't exactly the best. Try using `ws` on the server and vanilla WebSockets on the browser.
+
+`Express.Static` is going to body you until you realize that you need to use `Node.__dirname`.
+
+Partial application exists (`.bind`).

@@ -30,7 +30,6 @@ class Server {
         webSocketServer.on("connection", (socket: WebSocket) -> {
             socket.on("message", (message: String) -> {
                 var clientMove: SocketMessage = haxe.Json.parse(message);
-                trace("Received a move. Countering.");
 
                 var counterMove = switch (clientMove.data.move) {
                     case ValidMoves.ROCK: ValidMoves.PAPER;
@@ -38,23 +37,14 @@ class Server {
                     case ValidMoves.SCISSORS: ValidMoves.SPOCK;
                     case ValidMoves.SPOCK: ValidMoves.LIZARD;
                     case ValidMoves.LIZARD: ValidMoves.ROCK;
+                    case _: throw "Not a valid move.";
                 }
 
-                // var counterMove;
-                // if (ValidMoves.ROCK.match(clientMove.data.move)) counterMove = ValidMoves.PAPER;
-                // if (ValidMoves.PAPER.match(clientMove.data.move)) counterMove = ValidMoves.SCISSORS;
-                // if (ValidMoves.SCISSORS.match(clientMove.data.move)) counterMove = ValidMoves.SPOCK;
-                // if (ValidMoves.SPOCK.match(clientMove.data.move)) counterMove = ValidMoves.LIZARD;
-                // if (ValidMoves.LIZARD.match(clientMove.data.move)) counterMove = ValidMoves.ROCK;
-
-                // var counterMove = ValidMoves.ROCK;
+                trace('Got ${clientMove.data.move}. Countering with $counterMove.');
                 
                 var serverMessage = {
                     type: UserDefinedSocketType.MOVE,
-                    data: {
-                        player: 1,
-                        move: counterMove
-                    }
+                    data: { player: 1, move: counterMove }
                 };
 
                 socket.send(haxe.Json.stringify(serverMessage));

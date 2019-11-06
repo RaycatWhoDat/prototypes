@@ -1,13 +1,5 @@
 package types;
 
-// enum ValidMoves {
-//     ROCK;
-//     PAPER;
-//     SCISSORS;
-//     LIZARD;
-//     SPOCK;
-// }
-
 @:enum
 abstract ValidMoves(String) {
     var ROCK = "ROCK";

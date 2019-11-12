@@ -5,3 +5,5 @@ socket-hub/.haxelib
 socket-hub/dist/*.js
 
 lix-project-testing/dist/*.js
+
+git-of-a-cat/dist/*

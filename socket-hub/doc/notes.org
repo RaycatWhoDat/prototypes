@@ -48,3 +48,6 @@ If you need to get the name of a EnumValue, you need to `using haxe.EnumTools` a
 You can use extractors to perform small transformations while pattern-matching (=>).
 
 You don't have to use a `macro function` when using `--macro`. You can call any static function like a macro from the command-line.
+
+`tink_cli` provides a Prompt. It expects a PromptType which is an enum on `tink.cli.Prompt`. It then takes a handler callback from the `tink.Future`.
+

@@ -18,7 +18,9 @@ class GitOfACat {
 
     public static function executeCommands(folder: String, repo: String, branch: String) {
         Sys.println('Spinning off subdirectory.');
-        var ORIGINAL_REPO_NAME = 'git@github.com:RayMPerry/prototypes.git';
+        var ORIGINAL_REPO_NAME = new sys.io.Process('git config --get remote.origin.url')
+            .stdout
+            .readLine();
 
         var commandArguments = [
             'filter-branch -f --prune-empty --subdirectory-filter $folder $branch',

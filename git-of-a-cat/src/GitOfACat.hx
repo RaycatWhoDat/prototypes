@@ -30,7 +30,8 @@ class GitOfACat {
         ];
 
         for (argument in commandArguments) {
-            if (Sys.command("git", [argument]) != 0) {
+            trace('git $argument');
+            if (Sys.command('git $argument') != 0) {
                 Sys.println('Something went wrong when running "git $argument".');
                 break;
             }

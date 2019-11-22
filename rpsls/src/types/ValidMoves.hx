@@ -1,7 +1,6 @@
 package types;
 
-@:enum
-abstract ValidMoves(String) {
+enum abstract ValidMoves(String) {
     var ROCK = "ROCK";
     var PAPER = "PAPER";
     var SCISSORS = "SCISSORS";

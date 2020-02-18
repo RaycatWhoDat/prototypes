@@ -51,7 +51,7 @@ You don't have to use a `macro function` when using `--macro`. You can call any 
 
 `tink_cli` provides a Prompt. It expects a PromptType which is an enum on `tink.cli.Prompt`. It then takes a handler callback from the `tink.Future`.
 
-Let's say, you've already profiled your problem with [hxScout](https://hxscout.com) and you need to pull out some more performance.
+Let's say, you've already profiled your problem with [[https://hxscout.com][hxScout]] and you need to pull out some more performance.
 If you're "tuning up" a `hxcpp`-targeting project, there are a few things you can do:
 1) You can replace structures with classes. You can do this the traditional way or you can use `@:structInit class` to get 85% of the way there.
 2) Use `@:generic` to annotate type parameters. Type parameter performance degrades when compiling down. So, if there's a situation where you have `class ClassWithTypeParam<T>` or `function funcWithTypeParam<T>`, put a `@:generic` in front of it.

@@ -67,3 +67,5 @@ If you're "tuning up" a `hxcpp`-targeting project, there are a few things you ca
 2) Use `@:generic` to annotate type parameters. Type parameter performance degrades when compiling down. So, if there's a situation where you have `class ClassWithTypeParam<T>` or `function funcWithTypeParam<T>`, put a `@:generic` in front of it.
 3) Avoid Reflection and `Dynamic`. Static target performance suffers greatly.
 4) Avoid optional arguments when the argument is a basic type. Default arguments are fine but could also be a hindrance in performance-critical code.
+
+Use `--run` for scripts that you want to run with Haxe.

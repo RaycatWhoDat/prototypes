@@ -43,5 +43,5 @@ sub MAIN() {
 } 
 
 # Local Variables:
-# compile-command: "perl6 raku-lisp.p6"
+# compile-command: "raku ./raku-lisp.raku"
 # End:

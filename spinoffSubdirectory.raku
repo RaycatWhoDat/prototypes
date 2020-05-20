@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 
 sub MAIN(
     Str :$folder!, #= The subdirectory you wish to spinoff.
@@ -8,12 +8,11 @@ sub MAIN(
     loop {
         my $answer = prompt "Would you like to spinoff $folder from $branch into $repository? [y/N] ";
         redo unless $answer ~~ /:i y|n/;
-        if ($answer ~~ /:i n/) { return; }
+        return if $answer ~~ /:i n/;
         last;
     }
 
     my Str constant $ORIGINAL_REPO_NAME = "git@github.com:RayMPerry/prototypes.git";
-    
     say "Spinning off subdirectory.";
 
     my @commandsToRun = <<filter-branch -f --prune-empty --subdirectory-filter $folder $branch>>,
@@ -29,5 +28,5 @@ sub MAIN(
 }
 
 # Local Variables:
-# compile-command: "perl6 spinoffSubdirectory.p6"
+# compile-command: "raku spinoffSubdirectory.raku"
 # End:

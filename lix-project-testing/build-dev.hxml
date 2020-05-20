@@ -1,9 +1,0 @@
-all-deps.hxml
-
--D dev
-
---each
-
--D testing
--main Testbed
--js dist/dev-server.js

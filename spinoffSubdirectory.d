@@ -1,11 +1,10 @@
-import std.algorithm.searching;
-import std.algorithm.comparison;
-import std.getopt;
-import std.stdio;
+import std.algorithm;
 import std.ascii;
+import std.getopt;
+import std.process;
+import std.stdio;
 import std.string;
 import std.typecons;
-import std.process;
 
 string directory, branch, repository;
 const string ORIGINAL_REPO_NAME = "git@github.com:RayMPerry/prototypes.git";
@@ -18,13 +17,12 @@ bool isCommandSuccessful(Tuple!(int, "status", string, "output") executedCommand
 int spinoffSubdirectory(string directory, string branch, string repository) {
     writeln("Spinning off subdirectory.");
 
-    auto commandsToRun = [
-        ["git", "filter-branch", "-f", "--prune-empty", "--subdirectory-filter", directory, branch],
-        ["git", "remote", "set-url", "origin", repository],
-        ["git", "push", "-u", "origin", "master"],
-        ["git", "remote", "set-url", "origin", ORIGINAL_REPO_NAME],
-        ["git", "fetch", "--all"],
-        ["git", "reset", "--hard", "origin/master"]];
+    auto commandsToRun = [["git", "filter-branch", "-f", "--prune-empty", "--subdirectory-filter", directory, branch],
+                          ["git", "remote", "set-url", "origin", repository],
+                          ["git", "push", "-u", "origin", "master"],
+                          ["git", "remote", "set-url", "origin", ORIGINAL_REPO_NAME],
+                          ["git", "fetch", "--all"],
+                          ["git", "reset", "--hard", "origin/master"]];
 
     foreach (command; commandsToRun) {
       if (!isCommandSuccessful(command.execute())) return 1;
